@@ -9,10 +9,10 @@ app.post("/validate", async (request, reply) => {
         message: z.string()
     });
 
-    const bot = new Telegraf("7494356922:AAFMAyT1arQk9odOurniDtDFshymdNuxIiI");
+    const bot = new Telegraf(process.env.BOT_TOKEN);
 
     const { message } = requestSchema.parse(request.body);
-    await bot.telegram.sendMessage("5001451301", message);
+    await bot.telegram.sendMessage(process.env.CHAT_ID, message);
 
     reply.status(201).send();
 });
