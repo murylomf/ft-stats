@@ -16,7 +16,7 @@ app.post("/validate", async (request, reply) => {
     await bot.telegram.sendMessage(process.env.CHAT_ID, message);
 
     if (chatId) {
-        await bot.telegram.sendMessage(process.env.CHAT_ID, message);
+        await bot.telegram.sendMessage(chatId, message);
     }
     reply.status(201).send();
 });
