@@ -6,14 +6,18 @@ const app = fastify();
 
 app.post("/validate", async (request, reply) => {
     const requestSchema = z.object({
-        message: z.string()
+        message: z.string(),
+        chatId: z.number().optional()
     });
 
     const bot = new Telegraf(process.env.BOT_TOKEN);
 
-    const { message } = requestSchema.parse(request.body);
+    const { message, chatId } = requestSchema.parse(request.body);
     await bot.telegram.sendMessage(process.env.CHAT_ID, message);
 
+    if (chatId) {
+        await bot.telegram.sendMessage(process.env.CHAT_ID, message);
+    }
     reply.status(201).send();
 });
 
